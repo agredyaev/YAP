@@ -22,4 +22,17 @@ def get_spark_session(name=""):
 spark = get_spark_session("Functions")
 
 
-data = spark.read.json('/user/data/master/events/').cache()
+events = spark.read.json('/user/data/master/events/').cache()
+
+
+
+
+import pyspark
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+                    .master("local") \
+                    .appName("Learning DataFrames") \
+                    .getOrCreate()
+events = spark.read.json("/user/master/data/events/")
+events.show(10) 
