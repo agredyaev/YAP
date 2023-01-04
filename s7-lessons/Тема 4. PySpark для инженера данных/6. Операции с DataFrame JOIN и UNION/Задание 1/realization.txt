@@ -1,0 +1,10 @@
+Сохраните сюда результат вывода:
++-------------------------+
+|title                    |
++-------------------------+
+|Bad Girls                |
+|Catch-22                 |
+|The Catcher in the Rye   |
+|The Mayor of Casterbridge|
+|The Wind in the Willows  |
++-------------------------+

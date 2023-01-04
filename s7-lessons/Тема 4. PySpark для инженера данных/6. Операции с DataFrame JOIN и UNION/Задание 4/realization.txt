@@ -1,0 +1,20 @@
+Сохраните сюда результат вывода:
++-----------------------------------+------------------------+-------+
+|title                              |author                  |book_id|
++-----------------------------------+------------------------+-------+
+|Harry Potter and the Goblet of Fire|J. K. Rowling           |322    |
+|Nineteen Eighty-Four               |George Orwell           |382    |
+|Jane Eyre                          |Charlotte Brontë        |159    |
+|Catch-22                           |Joseph Heller           |174    |
+|The Catcher in the Rye             |J. D. Salinger          |168    |
+|The Wind in the Willows            |Kenneth Grahame         |259    |
+|The Mayor of Casterbridge          |Thomas Hardy            |300    |
+|Bad Girls                          |Jacqueline Wilson       |299    |
+|Black Beauty                       |Anna Sewell             |657    |
+|Artemis Fowl                       |Eoin Colfer             |558    |
+|The Magic Faraway Tree             |Enid Blyton             |567    |
+|The Witches                        |Roald Dahl              |567    |
+|Frankenstein                       |Mary Shelley            |567    |
+|The Little Prince                  |Antoine de Saint-Exupéry|557    |
+|The Truth                          |Terry Pratchett         |576    |
++-----------------------------------+------------------------+-------+

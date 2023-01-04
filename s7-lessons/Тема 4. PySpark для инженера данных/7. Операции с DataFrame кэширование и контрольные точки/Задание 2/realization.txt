@@ -1,0 +1,3 @@
+Сохраните сюда результат вывода:
+== Physical Plan ==
+*(1) Scan ExistingRDD[book_id#158L,title#156,author#157]

@@ -1,0 +1,4 @@
+Сохраните результат вывода сюда:
+root
+ |-- Name: string (nullable = true)
+ |-- Age: long (nullable = true)
