@@ -76,4 +76,4 @@ with DAG(
 
     user_interests_d28 = SparkSubmitOperator(**user_interests_d28,conf=spark_config)
 
-    user_interests_d7 >> user_interests_d28
+    [user_interests_d7, user_interests_d28]
