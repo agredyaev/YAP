@@ -11,21 +11,17 @@ os.environ['SPARK_HOME'] ='/usr/lib/spark'
 os.environ['PYTHONPATH'] ='/usr/local/lib/python3.8'
 
 
-
-
-
 default_args = {
-                                'owner': 'airflow',
-                                'start_date':datetime(2020, 1, 1)
-   
-                                }
+    'owner': 'airflow',
+    'start_date':datetime(2020, 1, 1)
+    }
 
 
 user_interests_d7 = {
     "task_id":"user_interests_d7",
     "conn_id":"spark_yarn",
-    "application": "/lessons/job.py",
-    "application_args": ['2022-05-02', '7',  '/user/agredyaev/data/events', '/user/agredyaev/data/analytics'],
+    "application": "/lessons/user_interests.py",
+    "application_args": ['2022-05-25', '7',  '/user/agredyaev/data/events', '/user/agredyaev/data/analytics'],
 #     "executor-memory":"10G",
 #     "driver-memory":"10G",
 #     "executor-cores":2
@@ -37,8 +33,8 @@ user_interests_d7 = {
 user_interests_d28 = {
     "task_id":"user_interests_d28",
     "conn_id":"spark_yarn",
-    "application": "/lessons/job.py",
-    "application_args": ['2022-05-02', '28',  '/user/agredyaev/data/events', '/user/agredyaev/data/analytics'],
+    "application": "/lessons/user_interests.py",
+    "application_args": ['2022-05-25', '28',  '/user/agredyaev/data/events', '/user/agredyaev/data/analytics'],
 #     "executor-memory":"10G",
 #     "driver-memory":"10G",
 #     "executor-cores":2
