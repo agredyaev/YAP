@@ -1,0 +1,6 @@
+bootstrap.servers=rc1b-2erh7b35n4j4v869.mdb.yandexcloud.net:9091
+security.protocol=SASL_SSL
+sasl.mechanisms=SCRAM-SHA-512
+sasl.username=de-student
+sasl.password=ltcneltyn
+ssl.ca.location=CA.pem
