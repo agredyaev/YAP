@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession, DataFrame
+from 
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, DoubleType, StringType, TimestampType
 from settings import TOPIC_NAME
@@ -54,19 +55,22 @@ def transform(df: DataFrame) -> DataFrame:
         .drop('event')
 
 
+def write_stream(df):
+    return df \
+        .writeStream \
+        .outputMode("append") \
+        .format("console") \
+        .option("truncate", False) \
+        .trigger(once=True) \
+        .start()
+ 
+
 spark = spark_init()
 
 source_df = load_df(spark)
 output_df = transform(source_df)
 
-query = (output_df
-            .writeStream
-            .outputMode("append")
-            .format("console")
-            .option("truncate", False)
-            .trigger(once=True)
-            .start()
-            )
+query = write_stream(output_df)
 try:
     query.awaitTermination()
 finally:
