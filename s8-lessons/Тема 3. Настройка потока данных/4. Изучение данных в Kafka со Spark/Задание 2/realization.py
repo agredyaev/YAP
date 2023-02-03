@@ -32,6 +32,7 @@ def load_df(spark: SparkSession) -> DataFrame:
 
 
 def transform(df: DataFrame) -> DataFrame:
+    
     schema = StructType([
         StructField("subscription_id", IntegerType()),
         StructField("name", StringType()),
