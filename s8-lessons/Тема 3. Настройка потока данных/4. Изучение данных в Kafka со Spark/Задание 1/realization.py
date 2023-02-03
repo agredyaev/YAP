@@ -18,8 +18,9 @@ spark = SparkSession.builder \
 
 config = {
     'kafka.bootstrap.servers': 'rc1b-2erh7b35n4j4v869.mdb.yandexcloud.net:9091',
-    # 'kafka.security.protocol': 'SASL_SSL',
-    'kafka.sasl.mechanism': 'org.apache.kafka.common.security.scram.ScramLoginModule required username="de-student" password="ltcneltyn";',
+    'kafka.security.protocol': 'SASL_SSL',
+    'kafka.sasl.mechanism': 'SCRAM-SHA-512',
+    'kafka.sasl.jaas.config': 'org.apache.kafka.common.security.scram.ScramLoginModule required username="de-student" password="ltcneltyn";',
     "subscribe": 'persist_topic'
 }
 
@@ -28,5 +29,3 @@ df = spark.read \
     .format('kafka') \
     .options(**config) \
     .load()
-
-print(df.printSchema())
