@@ -1,11 +1,7 @@
 from pyspark.sql import SparkSession, DataFrame
-from 
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, DoubleType, StringType, TimestampType
 from settings import TOPIC_NAME
-
-
-print(TOPIC_NAME)
 
 # необходимая библиотека с идентификатором в maven
 # вы можете использовать ее с помощью метода .config и опции "spark.jars.packages"
