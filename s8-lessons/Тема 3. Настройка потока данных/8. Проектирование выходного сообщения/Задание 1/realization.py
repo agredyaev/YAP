@@ -5,10 +5,12 @@ from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType, StructField, DoubleType, StringType, TimestampType, IntegerType, BooleanType
 
-spark_jar_packages = ','.join([
-    "org.postgresql:postgresql:42.4.0",
-    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0"
-])
+spark_jars_packages = ",".join(
+    [
+        "org.postgresql:postgresql:42.4.0",
+        'org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0'
+    ]
+)
 
 postgres_config = {
     'url': 'jdbc:postgresql://rc1a-fswjkpli01zafgjm.mdb.yandexcloud.net:6432/de',
@@ -61,9 +63,9 @@ def tag_the_firt_row(window):
 
 
 def spark_init(test_name) -> SparkSession:
-    return SparkSession \
-        .builder \
+    return SparkSession.builder \
         .appName(test_name) \
+        .config("spark.jars.packages", spark_jars_packages) \
         .getOrCreate()
 
 
@@ -95,9 +97,10 @@ def transform_client_stream_df(df: DataFrame) -> DataFrame:
         .withColumn('key', F.col('key').cast(StringType())) \
         .withColumn('value', F.col('value').cast(StringType())) \
         .withColumn('event', F.from_json('value', schema)) \
-        .select('event.*') \
+        .select('event.*', 'offset') \
         .drop_duplicates(['client_id', 'timestamp']) \
-        .withColumn('timestamp', F.from_unixtime(F.col('timestamp'), "yyyy-MM-dd' 'HH:mm:ss.SSS").cast(TimestampType()))
+        .withColumn('timestamp', F.from_unixtime(F.col('timestamp'), "yyyy-MM-dd' 'HH:mm:ss.SSS").cast(TimestampType())) \
+        .withWatermark('timestamp', '10 minutes')
 
 
 def add_prefix(prefix: str, df: DataFrame) -> DataFrame:
@@ -108,28 +111,28 @@ def add_prefix(prefix: str, df: DataFrame) -> DataFrame:
 
 def join(user_df: DataFrame, marketing_df: DataFrame) -> DataFrame:
 
-    window = Window.partitionBy().orderBy()
+    window = Window.partitionBy("client_id", 'timestamp', "adv_campaign_id").orderBy('distance')
 
     marketing_df = add_prefix('adv_campaign', marketing_df)
 
     return user_df \
         .crossJoin(F.broadcast(marketing_df)) \
-        .withColumn('distance', get_distance(F.col('lat'), F.col('adv_campaign_point_lat'), F.col('lon'), F.col('adv_campaign_point_lon'))) \
-        .withColumn('is_lower_distance', tag_the_firt_row(window)) \
-        .where(F.col('is_lower_distance') & F.col('distance') <= F.col('adv_campaign_radius')) \
-        .withColumn("created_at", F.current_timestamp()) \
-        .select(
-            "client_id",  # идентификатор клиента
-            "adv_campaign_id",  # идентификатор рекламной акции
-            "adv_campaign_name",  # описание рекламной акции
-            "adv_campaign_description",  # описание рекламной акции
-            "adv_campaign_start_time",  # время начала акции
-            "adv_campaign_end_time",  # время окончания акции
-            "adv_campaign_point_lat",  # расположение ресторана/точки широта
-            "adv_campaign_point_lon",  # расположение ресторана/долгота широта
-            "created_at",  # время создания выходного ивента
-            "offset",  # офсет оригинального сообщения из Kafka
-        )
+        .withColumn('distance', get_distance(F.col('lat'), F.col('adv_campaign_point_lat'), F.col('lon'), F.col('adv_campaign_point_lon')))
+        # .withColumn('is_lower_distance', tag_the_firt_row(window)) \
+        # .where(F.col('is_lower_distance') & (F.col('distance') <= F.col('adv_campaign_radius'))) \
+        # .withColumn("created_at", F.current_timestamp()) \
+        # .select(
+        #     "client_id",  # идентификатор клиента
+        #     "adv_campaign_id",  # идентификатор рекламной акции
+        #     "adv_campaign_name",  # описание рекламной акции
+        #     "adv_campaign_description",  # описание рекламной акции
+        #     "adv_campaign_start_time",  # время начала акции
+        #     "adv_campaign_end_time",  # время окончания акции
+        #     "adv_campaign_point_lat",  # расположение ресторана/точки широта
+        #     "adv_campaign_point_lon",  # расположение ресторана/долгота широта
+        #     "created_at",  # время создания выходного ивента
+        #     "offset",  # офсет оригинального сообщения из Kafka
+        # )
 
 
 def get_output(df: DataFrame):
@@ -141,13 +144,14 @@ def get_output(df: DataFrame):
         .start()
 
 
+
 spark = spark_init('join stream')
 client_stream = read_client_stream(spark)
-# client_stream = transform_client_stream_df(client_stream)
-# marketing_df = read_marketing(spark)
-# result = join(client_stream, marketing_df)
+client_stream = transform_client_stream_df(client_stream)
+marketing_df = read_marketing(spark)
+result = join(client_stream, marketing_df)
 
-query = get_output(client_stream)
+query = get_output(result)
 query.awaitTermination()
 
 
