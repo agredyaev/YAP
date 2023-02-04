@@ -98,6 +98,7 @@ def add_prefix(prefix: str, df: DataFrame) -> DataFrame:
 
 
 def convert_coordinates(df: DataFrame) -> DataFrame:
+    
     for col in ('lat', 'adv_campaign_point_lat', 'lon', 'adv_campaign_point_lon'):
         df = df.withColumn(col, F.radians(F.col(col)))
 
