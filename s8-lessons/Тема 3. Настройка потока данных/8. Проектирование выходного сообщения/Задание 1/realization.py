@@ -26,7 +26,8 @@ kafka_config = {
     'kafka.security.protocol': 'SASL_SSL',
     'kafka.sasl.mechanism': 'SCRAM-SHA-512',
     'kafka.sasl.jaas.config': 'org.apache.kafka.common.security.scram.ScramLoginModule required username="de-student" password="ltcneltyn";',
-    "subscribe": 'student.topic.cohort5.agredyaev'
+    "subscribe": 'client.stream'
+    # 'student.topic.cohort5.agredyaev'
 }
 
 
