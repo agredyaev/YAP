@@ -53,7 +53,7 @@ def get_distance(lat1, lat2, lon1, lon2):
     return F.lit(2) * R * F.asin(F.sqrt(__func(lat1, lat2) + F.cos(lat1) * F.cos(lat2) * __func(lon1, lon2)))
 
 
-def spark_init(test_name) -> SparkSession:
+def spark_init(test_name: str) -> SparkSession:
     return SparkSession.builder \
         .appName(test_name) \
         .config("spark.jars.packages", spark_jars_packages) \
@@ -158,10 +158,10 @@ if __name__ == "__main__":
     query = run_query(output)
 
     while query.isActive:
-        print(f"query information: runId={query.runId}, "
-              f"status is {query.status}, "
-              f"recent progress={query.recentProgress}"
-              )
+        print(
+            f"query information: runId={query.runId}, "
+            f"status is {query.status}, "
+            f"recent progress={query.recentProgress}")
         sleep(30)
 
     query.awaitTermination()
