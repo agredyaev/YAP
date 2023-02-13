@@ -1,2 +1,2 @@
-USER_HOST = '62.84.124.27' # укажите свой хост
-TOPIC_NAME = 'student.topic.cohort5.agredyaev' # укажите название топика student.topic.cohort<номер когорты>.<username>
+USER_HOST = '130.193.36.147' # укажите свой хост
+TOPIC_NAME = 'agredyaev1.in' # укажите название топика student.topic.cohort<номер когорты>.<username>
