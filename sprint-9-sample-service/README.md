@@ -2,7 +2,7 @@
 
 После успешной аутентификации в кластере склонируйте репозиторий этого чарта к себе на компьютер.
 
-В файле `app/values.yaml` измените значения переменных. Укажите ссылку на реджистри:
+В файле `app/values.yaml` измените значения переменных. Укажите ссылку на реджистри, созданного в Yandex Cloud и версию образа:
 
 ```yaml
 image:
@@ -26,6 +26,6 @@ helm upgrade --install --atomic test app
 
 <img src="img/regisry_all_users.png" alt="Contact Point" width="512"/>
 
-Назначьте этой группе роль `container-registry.images.puller`:
+Назначте этой группе роль `container-registry.images.puller`:
 
 <img src="img/regisry_role.png" alt="Contact Point" width="512"/>

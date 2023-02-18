@@ -6,4 +6,3 @@ YandexInternalRootCA.crt
 
 __pycache__/
 .mypy_cache
-.pytetst_cache
