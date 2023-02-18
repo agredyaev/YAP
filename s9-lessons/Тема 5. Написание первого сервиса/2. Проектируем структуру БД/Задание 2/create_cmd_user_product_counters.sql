@@ -1,4 +1,4 @@
-CREATE TABLE cdm.user_product_counters (
+CREATE TABLE IF NOT EXISTS cdm.user_product_counters (
 	id serial NOT NULL,
 	user_id uuid NOT NULL,
 	product_id uuid NOT NULL,

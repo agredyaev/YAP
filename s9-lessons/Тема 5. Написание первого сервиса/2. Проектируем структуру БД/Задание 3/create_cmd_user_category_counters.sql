@@ -1,4 +1,4 @@
-CREATE TABLE cdm.user_category_counters (
+CREATE TABLE IF NOT EXISTS cdm.user_category_counters (
 	id serial NOT NULL,
 	user_id uuid NOT NULL,
 	category_id uuid NOT NULL,
