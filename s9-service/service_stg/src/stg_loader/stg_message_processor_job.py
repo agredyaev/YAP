@@ -62,9 +62,9 @@ class StgMessageProcessor:
                 "object_id": object_id,
                 "object_type": "order",
                 "payload": {
-                    "id": msg["object_id"],
-                    "date": payload["date"],
-                    "cost": payload["cost"],
+                    "id": msg["object_id"], # order id
+                    "date": payload["date"], # order date 
+                    "cost": payload["cost"], 
                     "payment": payload["payment"],
                     "status": payload["final_status"],
                     "restaurant": {"id": restaurant_id, "name": restaurant_name},
